@@ -26,7 +26,7 @@ import com.example.employeeproject.service.EmployeeService;
 public class EmployeeController {
 	
 	@Autowired
-	EmployeeService empservice; // Injecting Service class dependecy
+	EmployeeService empservice; // Injecting Service class dependecy..
 	
 	Logger log=LogManager.getLogger(EmployeeController.class); // Log4j Object Creation
 	
