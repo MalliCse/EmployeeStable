@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.employeeproject.model.Employee;
 import com.example.employeeproject.service.EmployeeService;
 
 @RestController
+@RequestMapping("/api/v1")
 public class EmployeeController {
 	
 	@Autowired
@@ -36,7 +38,7 @@ public class EmployeeController {
 //		System.out.println(emp.)
 		
 		empservice.saveDetailsViaEmployeeService(emp);
-		log.info("Request is forwarded to Save Employee Details Service");
+		//log.info("Request is forwarded to Save Employee Details Service");
 		return new ResponseEntity<String>("Employee Details Saved",HttpStatus.CREATED);
 		
 	}

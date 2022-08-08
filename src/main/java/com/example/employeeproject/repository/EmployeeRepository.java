@@ -1,6 +1,7 @@
 package com.example.employeeproject.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.employeeproject.model.Employee;
@@ -9,5 +10,8 @@ import com.example.employeeproject.model.Employee;
 public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 	
 	
+	Employee findByphonenumber(@Param("phonenumber") int phonenumber);
+	
+	Employee findByNameAndEmail(@Param("name") String name,@Param("emal") String email);
 
 }
