@@ -41,11 +41,17 @@ public class EmployeeService {
 		try {
 		Optional<Employee> emp=emprepo.findById(empid);
 		log.info("Details Are Found For Requested Employee ID: {} and Request forwarded to controller",empid);
+		if(emp.isPresent())
 		return emp.get();
-		}
-		catch (NoSuchElementException e) {
+		else
+		{
 			throw new NoSuchElementException();
 		}
+	}
+		finally {
+			
+		}
+		
 		
 		
 	}
@@ -96,5 +102,12 @@ public class EmployeeService {
 		
 	}
 		
+	 public static String sampleStaticMethod(String name)
+	 {
+		return name; 
+	 }
+	 
+	
+	 
 	}
 

@@ -63,9 +63,8 @@ public class Employee {
 	public void setCreated_on(String created_on) {
 		this.created_on = created_on;
 	}
-	public Employee(int id, String name, String email, int phonenumber, String createdby, String created_on) {
+	public Employee(String name, String email, int phonenumber, String createdby, String created_on) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.phonenumber = phonenumber;

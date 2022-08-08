@@ -26,10 +26,10 @@ public class GlobalExceptions extends ResponseEntityExceptionHandler {
 	}
 
 	@ExceptionHandler(NoSuchElementException.class)
-	public ResponseEntity<Object> handleNoSuchElementException() {
+	public ResponseEntity<String> handleNoSuchElementException() {
 		log.error("No Details Found For Requested Employee ID");
 
-		return new ResponseEntity<Object>("Employee Id Is Not Found", HttpStatus.NOT_FOUND);
+		return new ResponseEntity<String>("Employee Id Is Not Found", HttpStatus.NOT_FOUND);
 	}
 
 }
