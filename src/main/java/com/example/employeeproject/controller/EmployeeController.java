@@ -49,8 +49,9 @@ public class EmployeeController {
 	//@ApiIgnore
 	public ResponseEntity<String> saveEmployeeDetails(@RequestBody @Valid Employee emp){
 		log.info("Request is forwarded to Save Employee Details Service");
-		return new ResponseEntity<String>(empservice.saveDetailsViaEmployeeService(emp),HttpStatus.CREATED);
 		log.info("Response Is Sent");
+		return new ResponseEntity<String>(empservice.saveDetailsViaEmployeeService(emp),HttpStatus.CREATED);
+		
 	}
 	
 	@PostMapping(value="/saveAllEmployeeDetails",consumes  = {"application/json"})
