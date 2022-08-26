@@ -1,9 +1,8 @@
 package com.example.employeeproject.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
-
-
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.employeeproject.model.Employee;
 import com.example.employeeproject.repository.EmployeeRepository;
@@ -26,35 +26,36 @@ public class EmployeeService {
 	
 	@Autowired
 	EmployeeRepository emprepo;
-	
-	
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void saveDetailsViaEmployeeService(Employee emp) {
-		
+	public String saveDetailsViaEmployeeService(Employee emp) {
+		Employee dbemp=emprepo.findByNameAndEmail(emp.getName(), emp.getEmail());
+		if(dbemp==null)
+		{
 		Employee emp1 =emprepo.save(emp);
 		log.info("Employee Details Are Saved");
+		return "Details Are Saved Successfully";
+		}
+		
+		return "Details Are Already Available";
+		
 	}
 	
 	@Transactional(readOnly = true)
 	public Employee getDetailsViaEmployeeService(int empid)  {
-		try {
-		Optional<Employee> emp=emprepo.findById(empid);
-		log.info("Details Are Found For Requested Employee ID: {} and Request forwarded to controller",empid);
-		if(emp.isPresent())
-		return emp.get();
-		else
-		{
-			throw new NoSuchElementException();
-		}
+		//return emprepo.findById(empid).orElseThrow(()->new NoSuchElementException());
+		return emprepo.findById(empid).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"User id :"+empid+"Not Found"));
 	}
-		finally {
-			
-		}
-		
-		
-		
-	}
+	
+	/*
+	 * @Transactional(readOnly = true) public Employee
+	 * getDetailsViaEmployeeService(String empid) { //return
+	 * emprepo.findById(empid).orElseThrow(()->new NoSuchElementException()); return
+	 * emprepo.findById(empid).orElseThrow(()->new
+	 * ResponseStatusException(HttpStatus.NOT_FOUND,"User id :"+empid+"Not Found"));
+	 * }
+	 */
+
 
 	@Transactional(readOnly = true,propagation = Propagation.NEVER)
 	public Page<Employee> getAllDetailsViaEmployeeService(int offset, int pagesize) {
@@ -65,49 +66,45 @@ public class EmployeeService {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public String updateDetailsViaEmployeeService(int empid, Employee emp) {
 		// TODO Auto-generated method stub
-		Optional<Employee> emp1=emprepo.findById(empid);
-		Employee empobjectindb = emp1.get();
+		Employee empobjectindb =emprepo.findById(empid).orElseThrow(()->new ResponseStatusException(HttpStatus.BAD_REQUEST,"User id :"+empid+"Not Found"));
 		log.info("Details Are Found For Requested Employee ID: {} for updating the details",empid);
-			empobjectindb.setName(emp.getName());
-		empobjectindb.setEmail(emp.getEmail());
-		empobjectindb.setPhonenumber(emp.getPhonenumber());
-		empobjectindb.setCreatedby(emp.getCreatedby());
-		empobjectindb.setCreated_on(emp.getCreated_on());
-		Employee studentdata =emprepo.save(empobjectindb);
-		log.info("Employee Details Are Updated and Employee Id is {}",empid);
+		  empobjectindb.setName(emp.getName()); 
+		  empobjectindb.setEmail(emp.getEmail());
+		  empobjectindb.setPhonenumber(emp.getPhonenumber());
+		  empobjectindb.setSalary(emp.getSalary());
+		   Employee studentdata=emprepo.save(empobjectindb);
+		  log.info("Employee Details Are Updated and Employee Id is {}",empid);
 		return "Employee Details Are Updated";
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ResponseEntity<String> deleteDetailsViaEmployeeService(int empid) {
-			Optional<Employee> empobjectindb = emprepo.findById(empid);
+			Employee empobjectindb = emprepo.findById(empid).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"User id :"+empid+"Not Found"));
 			log.info("Details Are Found For Requested Employee ID: {} for deleting the details",empid);
-			if(empobjectindb.isPresent())
+			emprepo.deleteById(empid);
+			return new ResponseEntity<String>("Requested Employee Details Are deleted",HttpStatus.OK);
+		
+	}
+
+	public List<String> saveAllDetailsViaEmployeeService(List<Employee> emplist) {
+		List<Employee> updatedEmployeeList=new ArrayList<Employee>();
+		List<String> duplicaterecords=new ArrayList<String>();
+		for(Employee emp:emplist)
+		{
+			Employee dbemp = emprepo.findByphonenumber(emp.getPhonenumber());
+			if(dbemp!=null)
 			{
-				System.out.println("Else Part");
-				emprepo.deleteById(empid);
-				log.info("Employee Details Are Deleted and Employee Id is {}",empid);
+				duplicaterecords.add(dbemp.getPhonenumber());
 			}
 			else
 			{
-				
-				System.out.println("Else Part");
-				return new ResponseEntity<String>("Data Is Not Found", HttpStatus.NOT_FOUND);
-				
+				updatedEmployeeList.add(emp);
 			}
+		}
 		
-		return new ResponseEntity<String>("Data Is deleted", HttpStatus.ACCEPTED);
-		
-		
-		
+		emprepo.saveAll(updatedEmployeeList);
+		return duplicaterecords;
 	}
 		
-	 public static String sampleStaticMethod(String name)
-	 {
-		return name; 
-	 }
-	 
-	
-	 
-	}
+}
 
