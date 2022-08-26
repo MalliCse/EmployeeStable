@@ -1,5 +1,6 @@
 package com.example.employeeproject;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -17,9 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.example.employeeproject.model.Employee;
 import com.example.employeeproject.repository.EmployeeRepository;
 
-
-
-
 @SpringBootTest
 class EmployeeRepositoryTest {
 
@@ -32,16 +30,15 @@ class EmployeeRepositoryTest {
 		Employee testemp = new Employee();
 		testemp.setName("malli");
 		testemp.setEmail("mallikharjuna116@gmail.com");
-		testemp.setCreated_on("08-04-2022");
-		testemp.setCreatedby("mkurmala");
-		testemp.setPhonenumber(79951571);
+		testemp.setPhonenumber("7995157152");
+		testemp.setSalary(new BigDecimal(1990.00));
 		emprepo.save(testemp);
 	}
 	
 	@Test
 	public void findByPhoneNumberTest()
 	{
-		Assertions.assertEquals(emprepo.findByphonenumber(79951571).getId(),1);
+		Assertions.assertEquals(emprepo.findByphonenumber("7995157152").getId(),1);
 	}
 	
 	

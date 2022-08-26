@@ -10,8 +10,7 @@ import com.example.employeeproject.model.Employee;
 public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 	
 	
-	Employee findByphonenumber(@Param("phonenumber") int phonenumber);
+	Employee findByphonenumber(@Param("phonenumber") String phonenumber);
 	
-	Employee findByNameAndEmail(@Param("name") String name,@Param("emal") String email);
-
+	Employee findByNameAndEmail(@Param("name") String name,@Param("email") String email);
 }

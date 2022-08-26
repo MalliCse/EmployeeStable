@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.math.BigDecimal;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SpringBootTest
 @AutoConfigureMockMvc
 @WithMockUser(username = "Malli",password = "Malli@12345",roles = "USER")
-@ActiveProfiles("dev")
+//@ActiveProfiles("dev")
 class EmployeeControllerTestMockMvc {
 
 
@@ -35,7 +37,7 @@ class EmployeeControllerTestMockMvc {
 	  @Test
 	  public void testsaveEmployeeDetails() throws Exception {
 
-		  Employee emp = new Employee("Malli", "malli@gmail.com", 123456, "mkurmala", "07-july");
+		  Employee emp = new Employee(1,"Malli","malli@gmail.com","7995157152",new BigDecimal(19000.00));
 			ObjectMapper objmap=new ObjectMapper();
 			String empcontent=objmap.writeValueAsString(emp);
 		  mockmvc.perform(post("/api/v1/saveEmployeeDetails").contentType(MediaType.APPLICATION_JSON_VALUE).content(empcontent).accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isCreated());
@@ -65,25 +67,27 @@ class EmployeeControllerTestMockMvc {
 	  @Test
 	  public void testupdateEmployeeDetails() throws Exception {
 
-		  Employee emp1 = new Employee("Vishnu", "malli@gmail.com", 123456, "mkurmala", "07-july");
+		  Employee emp = new Employee(1,"Malli","malli@gmail.com","7995157152",new BigDecimal(19000.00));
 			ObjectMapper objmap=new ObjectMapper();
-			String empcontent=objmap.writeValueAsString(emp1);
+			String empcontent=objmap.writeValueAsString(emp);
 		  mockmvc.perform(put("/api/v1/updateEmployeeDetails/1").contentType(MediaType.APPLICATION_JSON_VALUE).content(empcontent).accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isCreated());
 			
 			 // MvcResult result=mockmvc.perform(reqbuilder).andReturn();
 	  }
 	  
 	  
-	  @Test
-	  public void testupdateEmployeeDetailsFailure() throws Exception {
-
-		  Employee emp1 = new Employee("Vishnu", "malli@gmail.com", 123456, "mkurmala", "07-july");
-			ObjectMapper objmap=new ObjectMapper();
-			String empcontent=objmap.writeValueAsString(emp1);
-		  mockmvc.perform(put("/api/v1/updateEmployeeDetails/2").contentType(MediaType.APPLICATION_JSON_VALUE).content(empcontent).accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isNotFound());
-			
-			 // MvcResult result=mockmvc.perform(reqbuilder).andReturn();
-	  }
+		/*
+		 * @Test public void testupdateEmployeeDetailsFailure() throws Exception {
+		 * 
+		 * Employee emp = new Employee(1,"Malli","malli@gmail.com","7995157152",new
+		 * BigDecimal(19000.00)); ObjectMapper objmap=new ObjectMapper(); String
+		 * empcontent=objmap.writeValueAsString(emp);
+		 * mockmvc.perform(put("/api/v1/updateEmployeeDetails/2").contentType(MediaType.
+		 * APPLICATION_JSON_VALUE).content(empcontent).accept(MediaType.
+		 * APPLICATION_JSON_VALUE)).andExpect(status().isNotFound());
+		 * 
+		 * // MvcResult result=mockmvc.perform(reqbuilder).andReturn(); }
+		 */
 
 	  @Test
 	  public void testdeleteEmployeeDetailsFailure() throws Exception {
