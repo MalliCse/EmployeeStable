@@ -36,24 +36,11 @@ public class EmployeeController {
 		log.info("Save Student Details Api Request Is Received");
 		
 //		System.out.println(emp.)
-		
-<<<<<<< Updated upstream
+
 		empservice.saveDetailsViaEmployeeService(emp);
 		//log.info("Request is forwarded to Save Employee Details Service");
 		return new ResponseEntity<String>("Employee Details Saved",HttpStatus.CREATED);
-		
-=======
-		List<String> duplicateEmployeeDetails =empservice.saveAllDetailsViaEmployeeService(emplist);
-		saveAllResponse duplicatedEmployeeDetailsResponse=new saveAllResponse(duplicateEmployeeDetails, " Duplicate Details Are Found With Above Contacts");
-		System.out.print(duplicatedEmployeeDetailsResponse.getMessage());
-		if(duplicateEmployeeDetails.size()>0)
-			return new ResponseEntity<Object>(duplicatedEmployeeDetailsResponse,HttpStatus.CREATED);
-		System.out.println("Comment");
-		return new ResponseEntity<Object>("All Records Are Persisted And No duplicate Records Are Found",HttpStatus.CREATED);
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+	
 	}
 	
 	@GetMapping("/getEmployeeDetails/{empid}")
