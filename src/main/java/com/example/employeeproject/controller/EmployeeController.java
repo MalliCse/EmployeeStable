@@ -106,7 +106,7 @@ public class EmployeeController {
 			return new ResponseEntity<String>("Employee Id Should Be Positive Number",HttpStatus.BAD_REQUEST);
 //		System.out.println(empservice.deleteDetailsViaEmployeeService(empid));
 		log.info("Request Is Forwarded To Delete Employee Details Service ");
+		log.info("Request Is Forwarded To Delete Employee Details Service ");
 		return empservice.deleteDetailsViaEmployeeService(empid);
-		
 	}
 }
