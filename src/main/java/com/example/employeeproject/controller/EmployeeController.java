@@ -69,11 +69,7 @@ public class EmployeeController {
 			return new ResponseEntity<Object>(duplicatedEmployeeDetailsResponse,HttpStatus.CREATED);
 		System.out.println("Comment");
 		return new ResponseEntity<Object>("All Records Are Persisted And No duplicate Records Are Found",HttpStatus.CREATED);
-<<<<<<< Updated upstream
-		
 
-=======
->>>>>>> Stashed changes
 	}
 	
 	@GetMapping("/getEmployeeDetails/{empid}")
