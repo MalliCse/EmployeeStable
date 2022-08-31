@@ -109,7 +109,4 @@ public class EmployeeController {
 		return empservice.deleteDetailsViaEmployeeService(empid);
 		
 	}
-	
-	
-
 }
