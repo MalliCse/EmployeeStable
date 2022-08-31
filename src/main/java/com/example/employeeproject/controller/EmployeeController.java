@@ -71,7 +71,6 @@ public class EmployeeController {
 	@GetMapping("/getEmployeeDetailsLocal/{empid}")
 	@Profile("local")
 	public Employee getEmployeeDetailsLocal(@PathVariable int empid){
-		
 		log.info("Get Employee Details  Api Request Is Received in Local Environment");
 		log.info("Request is forwarded to get Employee Details Service In Local Env");
 		return empservice.getDetailsViaEmployeeService(empid);
