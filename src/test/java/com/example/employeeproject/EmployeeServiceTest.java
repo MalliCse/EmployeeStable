@@ -4,7 +4,10 @@ package com.example.employeeproject;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.mockStatic;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -148,4 +152,40 @@ class EmployeeServiceTest {
 		//doNothing().when(emprepo).saveAll(listOfEmployeesDetails);
 		assertEquals(empservice.saveAllDetailsViaEmployeeService(listOfEmployeesDetails).size(), 2);
 	}
+	// Private Method Junit
+	
+	@Test
+	void testPrivateMethodTest() throws NoSuchMethodException,IllegalAccessException,InvocationTargetException
+	{
+		Class[] parameterType = null;
+		 Method method=EmployeeService.class.getDeclaredMethod("testPrivateMethod", parameterType);
+		 
+		 method.setAccessible(true);
+		 String returnValue = (String)method.invoke(empservice, null);
+
+			assertEquals(returnValue, "Testing Void Methiod");
+	}
+	
+	// static method junit
+	@Test
+	void testStaticMethodTest()
+	{
+		//assertEquals(EmployeeService.testStaticMethod(), "Testing Static Method");
+		
+		
+		Mockito.when(EmployeeService.testStaticMethod()).thenReturn("Testing Static Method");
+		assertEquals(empservice.testStaticMethod1(), "Testing Static Method");
+		
+		/*
+		 * try (MockedStatic mockStatic = mockStatic(EmployeeService.class)) {
+		 * 
+		 * mockStatic.when(EmployeeService::testStaticMethod).
+		 * thenReturn("Testing Static Method");
+		 * 
+		 * //Inside scope assertEquals("bar", empservice.testStaticMethod1()); }
+		 */
+
+	}
+	
+	
 }

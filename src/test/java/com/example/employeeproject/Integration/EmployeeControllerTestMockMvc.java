@@ -98,6 +98,8 @@ class EmployeeControllerTestMockMvc {
 			 * empcontent=objmap.writeValueAsString(emp1);
 			 */
 		  mockmvc.perform(delete("/api/v1/deleteEmployeeDetails/-1")).andExpect(status().isBadRequest());
+		  
+		  //.andExpectAll(result->result.getResolvedException().ge);
 			
 			 // MvcResult result=mockmvc.perform(reqbuilder).andReturn();
 	  }

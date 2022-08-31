@@ -106,5 +106,23 @@ public class EmployeeService {
 		return duplicaterecords;
 	}
 		
+	@SuppressWarnings("unused")
+	private String testPrivateMethod()
+	{
+		return "Testing Void Methiod";
+	}
+	
+	public static String testStaticMethod()
+	{
+		return "Testing Static Method";
+	}
+	
+	@SuppressWarnings("unused")
+	public String testStaticMethod1()
+	{
+		return EmployeeService.testStaticMethod();
+		
+	}
+	
 }
 

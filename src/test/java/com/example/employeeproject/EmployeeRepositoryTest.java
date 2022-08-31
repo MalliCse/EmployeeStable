@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.example.employeeproject.model.Employee;
 import com.example.employeeproject.repository.EmployeeRepository;
 
-@SpringBootTest
+@SpringBootTest 
 class EmployeeRepositoryTest {
 
 	@Autowired
